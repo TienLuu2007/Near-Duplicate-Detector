@@ -24,7 +24,7 @@ void index_document(const string& doc_id, const string& text, MinHash& hasher, L
     // cout << "Indexed (cleaned): " << doc_id << endl;
 }
 
-void queryCandidate(MinHash &minhasher, LSHIndex &lsh_index, string &query_text, string &candidate_id)
+void query(MinHash &minhasher, LSHIndex &lsh_index, string &query_text, string &query_id)
 {
     fstream log_file("query_log.txt", ios::app);
     if (!log_file.is_open()) {
@@ -39,11 +39,11 @@ void queryCandidate(MinHash &minhasher, LSHIndex &lsh_index, string &query_text,
     // Display the results
     if (candidates.empty()) 
     {
-        log_file << "No near-duplicates found" << endl;
+        log_file << "No near-duplicates found for " << query_id << endl;
     } 
     else 
     {
-        log_file << "Potential near-duplicates found for " << candidate_id << ":" << endl;
+        log_file << "Potential near-duplicates found for " << query_id << ":" << endl;
         for (const string& candidate_id : candidates) 
         {
             log_file << " -> " << candidate_id << endl;
@@ -79,16 +79,19 @@ void benchmark(MinHash &minhasher, LSHIndex &lsh_index, const json &dataset)
 {
     for(const auto& [key, item] : dataset.items())
     {
+        string original_text = item["original"];
+        string original_id = key;
+        index_document(original_id, original_text, minhasher, lsh_index);
+    }
+    for(const auto& [key, item] : dataset.items())
+    {
         for(const auto &variant : item["variants"])
         {
             string variant_id = variant["id"];
             string variant_text = variant["content"];
-            index_document(variant_id, variant_text, minhasher, lsh_index);
+            query(minhasher, lsh_index, variant_text, variant_id);
             // cout << "Indexed variant: " << variant_id << endl;
         }
-        string query_text = item["original"];
-        string candidate_id = key;
-        queryCandidate(minhasher, lsh_index, query_text, candidate_id);
     }
 }
 
