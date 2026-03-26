@@ -69,7 +69,7 @@ void write_result_to_file(const string& filename,
     out_file << "Execution time: " << fixed << setprecision(3) << duration_seconds << " seconds" << endl;
     out_file << endl;
     
-    // Write ground truth verification
+    // Write result
     out_file << "=== RESULT ===" << endl;
     
     int correct = 0;
