@@ -69,23 +69,8 @@ void write_result_to_file(const string& filename,
     out_file << "Execution time: " << fixed << setprecision(3) << duration_seconds << " seconds" << endl;
     out_file << endl;
     
-    // Write detection results
-    out_file << "=== Detection Results ===" << endl;
-    out_file << left << setw(25) << "Query Document" 
-             << setw(25) << "Matched Corpus" 
-             << "Similarity" << endl;
-    out_file << string(65, '-') << endl;
-    
-    for (const auto& [query_id, corpus_id, similarity] : results) 
-    {
-        out_file << left << setw(25) << query_id 
-                 << setw(25) << corpus_id 
-                 << fixed << setprecision(4) << similarity << endl;
-    }
-    out_file << endl;
-    
     // Write ground truth verification
-    out_file << "=== Ground Truth Verification ===" << endl;
+    out_file << "=== RESULT ===" << endl;
     
     int correct = 0;
     int total_expected = 0;
@@ -134,7 +119,7 @@ void write_result_to_file(const string& filename,
                     else 
                     {
                         out_file << "  [FAIL] " << variant_id << " -> NO MATCH" 
-                                 << " (expected: " << key << ")" << endl;
+                                 /*<< " (expected: " << key << ")"*/ << endl;
                     }
                 }
             }
