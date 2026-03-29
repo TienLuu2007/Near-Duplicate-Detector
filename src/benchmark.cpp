@@ -12,12 +12,12 @@ const nlohmann::json &original_library, const nlohmann::json &target_suite)
         index_original_documents(const_cast<nlohmann::json&>(original_library), minhasher, lsh_index);
 
     metrics res;
-    Tracker tracker(res.total_queries);
     timer query_timer;
     query_timer.start();
-
+    
     res.total_docs_in_library = original_library.size();
     res.total_queries = target_suite.size();
+    Tracker tracker(res.total_queries);
 
     for (const auto &obj : target_suite)
     {
@@ -137,10 +137,10 @@ metrics BruteForce(const nlohmann::json &original_library, const nlohmann::json 
         document_features.shingles[doc_id] = shingles;
     }
 
-    metrics res;
+    metrics res; res.total_queries = target_suite.size();
     timer run_timer;
     run_timer.start();
-    Tracker tracker(target_suite.size());
+    Tracker tracker(res.total_queries);
     
     for (const auto &obj : target_suite)
     {
