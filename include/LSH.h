@@ -7,6 +7,8 @@
 #include <set>
 #include <cstdint>
 
+#include "config.hpp"
+
 class LSHIndex 
 {
     private:
@@ -16,14 +18,13 @@ class LSHIndex
         std::map<int, std::map<uint64_t, std::vector<std::string>>> index;
 
     public:
-        // b * r == signature size
-        LSHIndex(int b = 20, int r = 5);
+        LSHIndex(int bands = Config::BANDS, int rows = Config::ROWS) : num_bands(bands), rows_per_band(rows) {}
 
         // Adds a signature to the buckets
-        void add_to_index(const std::string& doc_id, const std::vector<uint64_t>& signature);
+        void add_to_index(const std::string& doc_id, const std::vector<uint64_t> &signature);
 
         // Returns a list of potential duplicate IDs
-        std::set<std::string> query_candidates(const std::vector<uint64_t>& signature);
+        std::set<std::string> query_candidates(const std::vector<uint64_t> &signature);
 };
 
 #endif

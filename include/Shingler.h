@@ -4,11 +4,12 @@
 #include <string>
 #include <set>
 
+#include "config.hpp"
+
 class Shingler 
 {
-public:
-    // Shingle size of 4 to 9 for efficiency
-    static std::set<std::string> get_shingles(const std::string& text, int k = 4);
+    public:
+        static std::set<std::string> get_shingles(const std::string& text, int k = Config::K_GRAM);
 };
 
 #endif

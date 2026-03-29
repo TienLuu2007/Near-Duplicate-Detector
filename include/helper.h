@@ -6,6 +6,7 @@
 #include <set>
 #include <vector>
 #include <fstream>
+#include <map>
 
 #include "preprocessor.h"
 #include "shingler.h"
@@ -13,13 +14,20 @@
 #include "LSH.h"
 #include "json.hpp"
 
+struct IndexedData 
+{
+    std::map<std::string, std::set<std::string>> shingles;
+    std::map<std::string, std::vector<uint64_t>> signatures;
+};
 
-std::vector<uint64_t> getSignature(const std::string& text, MinHash& hasher);
+std::vector<uint64_t> getSignature(std::set<std::string> &shingles, MinHash &minhasher);
 
-void index_document(const std::string& doc_id, const std::string& text, MinHash& hasher, LSHIndex& index);
+IndexedData index_original_documents(nlohmann::json &library, MinHash &minhasher, LSHIndex &lsh);
 
-void detect(MinHash &minhasher, LSHIndex &lsh_index, const std::string &query_text, const std::string &query_id);
+nlohmann::json load_from_dataset(const std::string &path);
 
-nlohmann::json load_from_dataset(const std::string& path);
+std::string load_text_from_file(const std::string &file_path);
+
+double getJaccard(const std::set<std::string> &shingles1, const std::set<std::string> &shingles2);
 
 #endif
