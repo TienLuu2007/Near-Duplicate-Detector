@@ -12,7 +12,7 @@
 
 using json = nlohmann::json;
 
-void report(const metrics res)
+void report(const metrics &res)
 {
     std::ofstream report_file("bruteforce_benchmark.txt", std::ios::app);
     if (!report_file.is_open())

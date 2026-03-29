@@ -14,7 +14,7 @@
 
 using json = nlohmann::json;
 
-void report(const metrics benchmarkResults)
+void report(const metrics &benchmarkResults)
 {
     std::fstream report_file("lsh_benchmark.txt", std::ios::app);
     if (!report_file.is_open())
@@ -44,7 +44,7 @@ void report(const metrics benchmarkResults)
 }
 
 int main() {
-    Config::setConfig(4, 20, 5, 0.7);
+    Config::setConfig(4, 50, 4, 0.7);
     MinHash minhasher; 
     LSHIndex lsh_index;
 
@@ -53,7 +53,7 @@ int main() {
     std::string target_suite_path = project_root + "/data/meta/target_suite_master.json";
     json original_library = load_from_dataset(original_library_path);
     json target_suite = load_from_dataset(target_suite_path);
-    
+
     if (original_library.empty() || target_suite.empty()) 
     {
         std::cerr << "One or more datasets are empty or failed to load." << std::endl;
