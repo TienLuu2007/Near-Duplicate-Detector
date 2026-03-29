@@ -15,7 +15,7 @@ MinHash::MinHash(int sig_size, uint64_t p) : signature_size(sig_size), prime(p)
     }
 }
 
-std::vector<uint64_t> MinHash::compute_signature(const std::set<std::string>& shingles) 
+std::vector<uint64_t> MinHash::compute_signature(const std::set<std::string> &shingles) 
 {
     std::vector<uint64_t> signature(signature_size, ULLONG_MAX);
     std::hash<std::string> string_hasher;
@@ -37,4 +37,21 @@ std::vector<uint64_t> MinHash::compute_signature(const std::set<std::string>& sh
         }
     }
     return signature;
+}
+
+double MinHash::calculate_similarity(const std::vector<uint64_t> &sig1, const std::vector<uint64_t> &sig2) 
+{
+    if(sig1.size() != sig2.size()) 
+    {
+        return 0.0; 
+    }
+    int matches = 0;
+    for (size_t i = 0; i < sig1.size(); i++) 
+    {
+        if (sig1[i] == sig2[i]) 
+        {
+            matches++;
+        }
+    }
+    return static_cast<double>(matches) / sig1.size();
 }

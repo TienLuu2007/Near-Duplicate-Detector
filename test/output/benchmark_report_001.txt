@@ -1,0 +1,16 @@
+=== Benchmark Results ===
+--------------------------
+__Config settings: 
+K_GRAM: 4
+BANDS: 20
+ROWS: 5
+SIGNATURE_SIZE: 100
+THRESHOLD: 0.7
+-------------------------
+Precision at Threshold: 0.224687
+Recovery Rate: 0.9502
+Mean Absolute Error (MAE): 0.0480541
+Average Query Time (ms): 38.7415
+Selectivity: 0.00475876
+Mean Reciprocal Rank (MRR): 0.949167
+=== End of Report ===
